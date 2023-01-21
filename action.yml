@@ -3,7 +3,7 @@ author: Abhishek Naidu
 description: '🚧 Updates README with your Todoist stats'
 
 inputs:
-  TODOIST_API_KEY:
+  TODOIST_API_KEY: ${{ secrets.TODOIST_API_KEY }}
     description: 'Your Todoist API Key'
     required: true
 
