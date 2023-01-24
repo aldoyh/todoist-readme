@@ -18,7 +18,6 @@ inputs:
     required: false
 
 runs:
-  using: "node16"
   main: "dist/index.js"
 
 branding:
