@@ -2,7 +2,7 @@ const {spawn} = require('child_process');
 
 const exec = (cmd, args = [], options = {}) => new Promise((resolve, reject) => {
 
-  // console.log(`Started: ${cmd} ${args.join(' ')}`);
+  console.log(`Started: ${cmd} ${args.join(' ')}`);
 
   const optionsToCLI = {
     ...options

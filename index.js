@@ -103,7 +103,7 @@ async function commitReadme() {
     }
 
     notifyUserOnSuccess();
-    
+
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -129,7 +129,5 @@ function notifyUserOnFailure(error) {
 // Notify Slack on failure
 process.on("uncaughtException", notifyUserOnFailure);
 process.on("unhandledRejection", notifyUserOnFailure);
-
-
 
 main();
