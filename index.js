@@ -17,9 +17,12 @@ async function main() {
 
     await updateReadme(stats.data);
 
-    if (!process.env.TEST_MODE) {
-      await commitReadme();
-    }
+    await commitReadme();
+
+    // if (!process.env.TEST_MODE) {
+    //   await commitReadme();
+    // }
+    
   } catch (error) {
     core.setFailed(error.message);
   }
