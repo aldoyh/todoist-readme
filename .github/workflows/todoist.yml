@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # Runs every minute
-    - cron: "* * * * *"
+    - cron: "* */8 * * *"
 
 jobs:
   update-readme:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: abhisheknaiidu/todoist-readme@master
+      - uses: aldoyh/todoist-readme@master
         with:
           TODOIST_API_KEY: ${{ secrets.TODOIST_API_KEY }}
           PREMIUM: ""
