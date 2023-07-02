@@ -9,15 +9,30 @@ const exec = (cmd, args = [], options = {}) => new Promise((resolve, reject) => 
     Object.assign(optionsToCLI, {stdio: ['inherit', 'inherit', 'inherit']});
   }
   const app = spawn(cmd, args, optionsToCLI);
-  app.on('close', (code) => {
+  app.on('close', code => {
     if (code !== 0) {
-      const err = new Error(`Invalid status code: ${code}`);
-      err.code = code;
-      return reject(err);
+      reject(new Error(`Command "${cmd} ${args.join(' ')}" exited with code ${code}`));
+      return;
     }
-    return resolve(code);
-  });
-  app.on('error', reject);
+    resolve();
+  }
+  );
+
+  app.on('error', error => {
+    reject(error);
+  }
+  );
+
+  app.on('exit', code => {
+    if (code !== 0) {
+      reject(new Error(`Command "${cmd} ${args.join(' ')}" exited with code ${code}`));
+      return;
+    }
+    resolve();
+  }
+  );
+
+  
 });
  
 module.exports = exec;

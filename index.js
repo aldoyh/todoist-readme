@@ -4,7 +4,7 @@ const Humanize = require("humanize-plus");
 const fs = require("fs");
 const exec = require("./exec");
 
-const TODOIST_API_KEY = core.getInput("TODOIST_API_KEY");
+const TODOIST_API_KEY = core.getInput("TODOIST_API_KEY") || process.env.TODOIST_API_KEY;
 const PREMIUM = core.getInput("PREMIUM");
 
 async function main() {
