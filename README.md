@@ -25,8 +25,8 @@ Add a comment to your `README.md` like this:
 
 <!-- TODO-IST:START -->
 🏆  **9,088** Karma Points           
-🌸  Completed **0** tasks today           
-✅  Completed **668** tasks so far           
+🌸  Completed **3** tasks today           
+✅  Completed **671** tasks so far           
 ⏳  Longest streak is **5** days
 <!-- TODO-IST:END -->
 ```
