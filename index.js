@@ -74,7 +74,7 @@ async function updateReadme(data) {
   }
 }
 
-// console.log(todoist.length);
+console.log(todoist.length);
 
 const buildReadme = (prevReadmeContent, newReadmeContent) => {
   const tagToLookFor = "<!-- TODO-IST:";
