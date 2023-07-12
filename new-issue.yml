@@ -1,0 +1,59 @@
+# Credit to https://github.com/openscript/openscript :)
+# Inspired by https://github.com/BrunnerLivio
+
+on:
+  issues:
+    types: [opened, edited, deleted]
+
+name: New Issue
+
+jobs:
+  new_issue:
+    name: New Issue Job
+    if: ${{ github.event.action == 'created' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Update Task Manager 
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const tasks = fs.readFileSync(path.resolve(__dirname, 'tasks.md'), 'utf8');
+            const issue = context.issue;
+            const issueBody = issue.body;
+            const issueTitle = issue.title;
+            const issueNumber = issue.number;
+            const issueAuthor = issue.user.login;
+            const issueAuthorAvatar = issue.user.avatar_url;
+            const issueAuthorUrl = issue.user.html_url;
+            const issueUrl = issue.html_url;
+            const issueLabels = issue.labels;
+            const issueLabelsList = issueLabels.map(label => label.name);
+            const issueLabelsListString = issueLabelsList.join(', ');
+            
+            const task = `| ${issueNumber} | [${issueTitle}](${issueUrl}) | ${issueAuthor} | ${issueLabelsListString} |`;
+
+            const taskExists = tasks.includes(task);
+
+            if (taskExists) {
+              core.setFailed('Task already exists.');
+            } else {
+              const updatedTasks = `${tasks}\n${task}`;
+              fs.writeFileSync(path.resolve(__dirname, 'tasks.md'), updatedTasks);
+              core.setOutput('tasks', updatedTasks);
+            }
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'Github Actions Bot'
+          git config --global user.email {{ secrets.GITHUB_EMAIL }}
+
+          git commit -am ':sparkles: tasks updated.'
+
+      - name: Push Tasks to Repo
+        run: |
+          git push
