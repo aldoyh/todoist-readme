@@ -111,16 +111,10 @@ const buildReadme = (prevReadmeContent, newReadmeContent) => {
 
 const commitReadme = async () => {
   // Getting config
-  const committerUsername = "DoyDevLabs";
-  const committerEmail = "doydevlabs@gmail.com";
-  const commitMessage = "Todoist updated.";
-  // Doing commit and push
-  await exec("git", ["config", "--global", "user.email", committerEmail]);
-  await exec("git", ["config", "--global", "user.name", committerUsername]);
   await exec("git", ["add", README_FILE_PATH]);
   await exec("git", ["commit", "-m", commitMessage]);
   // await exec('git', ['fetch']);
-  await exec("git", ["push"]);
+  // await exec("git", ["push"]);
   core.info("Readme updated successfully.");
   // Making job fail if one of the source fails
   process.exit(jobFailFlag ? 1 : 0);
