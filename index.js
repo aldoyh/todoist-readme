@@ -59,7 +59,7 @@ async function updateReadme(data) {
 
     const newReadme = buildReadme(readmeData, todoist.join("           \n"));
     if (newReadme !== readmeData) {
-      core.info("Writing to " + README_FILE_PATH);
+      core.info("✏️ Writing to " + README_FILE_PATH);
       fs.writeFileSync(README_FILE_PATH, newReadme);
 
       // if (!process.env.TEST_MODE) {
@@ -67,6 +67,22 @@ async function updateReadme(data) {
       // }
 
       core.info("README.md updated 👔 Successfully");
+
+      // if (!process.env.TEST_MODE) {
+      //   await exec("git", ["add", README_FILE_PATH]);
+      //   await exec("git", [
+      //     "commit",
+      //     "-m",
+      //     "📝 update README.md",
+      //     "--no-verify",
+      //   ]);
+
+      //   await exec("git", ["push"]);
+      // }
+
+
+      process.exit(1);
+
 
       // GitHub Action git push 
 
@@ -113,60 +129,6 @@ const buildReadme = (prevReadmeContent, newReadmeContent) => {
     "\n",
     prevReadmeContent.slice(startOfClosingTagIndex),
   ].join("");
-};
-
-const commitReadme = async () => {
-  // Getting config
-  const gitConfig = {
-    email: core.getInput("GIT_EMAIL") || process.env.GIT_EMAIL,
-    username: core.getInput("GIT_USERNAME") || process.env.GIT_USERNAME,
-    rebase: core.getInput("REBASE") || process.env.REBASE,
-    branch: core.getInput("BRANCH") || process.env.BRANCH,
-    commit_message:
-      core.getInput("COMMIT_MESSAGE") || process.env.COMMIT_MESSAGE,
-
-    // For testing
-    test_mode: process.env.TEST_MODE,
-
-    // For debugging
-    debug: core.getInput("DEBUG") || process.env.DEBUG,
-
-  };
-
-  // Setting up git
-  await exec("git config --global user.email", gitConfig.email);
-
-  await exec("git config --global user.name", gitConfig.username);
-
-  // Fetching the latest changes
-  await exec("git fetch");
-
-  // Checking out to the branch
-  await exec("git checkout", gitConfig.branch);
-
-  // Rebasing
-  if (gitConfig.rebase === "true") {
-    await exec("git rebase origin", gitConfig.branch);
-  }
-
-  // Committing the changes
-  await exec("git add .");
-
-  await exec("git commit -m", gitConfig.commit_message);
-
-  // Pushing the changes
-  await exec("git push origin", gitConfig.branch);
-
-  core.info("Changes committed to the branch");
-
-  // Checking if the commit was successful
-  const gitLog = await exec("git log -1 --pretty=%B");
-
-  if (gitLog.includes(gitConfig.commit_message)) {
-    core.info("Commit successful");
-  }
-
-
 };
 
 (async () => {
