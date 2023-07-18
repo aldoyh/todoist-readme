@@ -6192,7 +6192,19 @@ async function updateReadme(data) {
   const longestStreak = [
     `⏳  Longest streak is **${goals.max_daily_streak.count}** days`,
   ];
-  // todoist.push(longestStreak);
+  todoist.push(longestStreak);
+
+  const currentStreak = [
+    `🔥  Current streak is **${goals.current_streak.count}** days`,
+  ];
+  todoist.push(currentStreak);
+
+  /**
+   * 
+   * 
+   * 
+   * Done with composition of todoist array
+   */
 
   if (todoist.length == 0) return;
 
@@ -6227,7 +6239,7 @@ async function updateReadme(data) {
       // }
 
 
-      process.exit(1);
+      process.exit(0);
 
 
       // GitHub Action git push 
