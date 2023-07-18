@@ -15,15 +15,30 @@ const exec = (cmd, args = [], options = {}) => new Promise((resolve, reject) => 
     Object.assign(optionsToCLI, {stdio: ['inherit', 'inherit', 'inherit']});
   }
   const app = spawn(cmd, args, optionsToCLI);
-  app.on('close', (code) => {
+  app.on('close', code => {
     if (code !== 0) {
-      const err = new Error(`Invalid status code: ${code}`);
-      err.code = code;
-      return reject(err);
+      reject(new Error(`Command "${cmd} ${args.join(' ')}" exited with code ${code}`));
+      return;
     }
-    return resolve(code);
-  });
-  app.on('error', reject);
+    resolve();
+  }
+  );
+
+  app.on('error', error => {
+    reject(error);
+  }
+  );
+
+  app.on('exit', code => {
+    if (code !== 0) {
+      reject(new Error(`Command "${cmd} ${args.join(' ')}" exited with code ${code}`));
+      return;
+    }
+    resolve();
+  }
+  );
+
+  
 });
  
 module.exports = exec;
@@ -6135,7 +6150,7 @@ const Humanize = __nccwpck_require__(667);
 const fs = __nccwpck_require__(7147);
 const exec = __nccwpck_require__(4841);
 
-const TODOIST_API_KEY = core.getInput("TODOIST_API_KEY");
+const TODOIST_API_KEY = core.getInput("TODOIST_API_KEY") || process.env.TODOIST_API_KEY;
 const PREMIUM = core.getInput("PREMIUM");
 
 async function main() {
@@ -6205,7 +6220,7 @@ async function updateReadme(data) {
   }
 }
 
-// console.log(todoist.length);
+console.log(todoist.length);
 
 const buildReadme = (prevReadmeContent, newReadmeContent) => {
   const tagToLookFor = "<!-- TODO-IST:";
