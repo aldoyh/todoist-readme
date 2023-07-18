@@ -46,7 +46,7 @@ async function updateReadme(data) {
   const longestStreak = [
     `⏳  Longest streak is **${goals.max_daily_streak.count}** days`,
   ];
-  todoist.push(longestStreak);
+  // todoist.push(longestStreak);
 
   if (todoist.length == 0) return;
 
@@ -59,11 +59,33 @@ async function updateReadme(data) {
 
     const newReadme = buildReadme(readmeData, todoist.join("           \n"));
     if (newReadme !== readmeData) {
-      core.info("Writing to " + README_FILE_PATH);
+      core.info("✏️ Writing to " + README_FILE_PATH);
       fs.writeFileSync(README_FILE_PATH, newReadme);
-      if (!process.env.TEST_MODE) {
-        commitReadme();
-      }
+
+      // if (!process.env.TEST_MODE) {
+      //   commitReadme();
+      // }
+
+      core.info("README.md updated 👔 Successfully");
+
+      // if (!process.env.TEST_MODE) {
+      //   await exec("git", ["add", README_FILE_PATH]);
+      //   await exec("git", [
+      //     "commit",
+      //     "-m",
+      //     "📝 update README.md",
+      //     "--no-verify",
+      //   ]);
+
+      //   await exec("git", ["push"]);
+      // }
+
+
+      process.exit(1);
+
+
+      // GitHub Action git push 
+
     } else {
       core.info("No change detected, skipping");
       process.exit(0);
@@ -74,7 +96,7 @@ async function updateReadme(data) {
   }
 }
 
-// console.log(todoist.length);
+console.log(todoist.length);
 
 const buildReadme = (prevReadmeContent, newReadmeContent) => {
   const tagToLookFor = "<!-- TODO-IST:";
@@ -107,23 +129,6 @@ const buildReadme = (prevReadmeContent, newReadmeContent) => {
     "\n",
     prevReadmeContent.slice(startOfClosingTagIndex),
   ].join("");
-};
-
-const commitReadme = async () => {
-  // Getting config
-  const committerUsername = "Hasan";
-  const committerEmail = "aldoyh@gmail.com";
-  const commitMessage = "Todoist updated.";
-  // Doing commit and push
-  await exec("git", ["config", "--global", "user.email", committerEmail]);
-  await exec("git", ["config", "--global", "user.name", committerUsername]);
-  await exec("git", ["add", README_FILE_PATH]);
-  await exec("git", ["commit", "-m", commitMessage]);
-  // await exec('git', ['fetch']);
-  await exec("git", ["push"]);
-  core.info("Readme updated successfully.");
-  // Making job fail if one of the source fails
-  process.exit(jobFailFlag ? 1 : 0);
 };
 
 (async () => {
