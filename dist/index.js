@@ -6192,12 +6192,12 @@ async function updateReadme(data) {
   const longestStreak = [
     `⏳  Longest streak is **${goals.max_daily_streak.count}** days`,
   ];
-  todoist.push(longestStreak);
+  // todoist.push(longestStreak);
 
-  const currentStreak = [
-    `🔥  Current streak is **${goals.current_streak.count}** days`,
-  ];
-  todoist.push(currentStreak);
+  // const currentStreak = [
+  //   `🔥  Current streak is **${goals.current_streak.count}** days`,
+  // ];
+  // todoist.push(currentStreak);
 
   /**
    * 
