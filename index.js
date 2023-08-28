@@ -69,7 +69,8 @@ async function updateReadme(data) {
     // })
     const readmeData = fs.readFileSync(README_FILE_PATH, "utf8");
 
-    const newReadme = buildReadme(readmeData, todoist.join("           \n"));
+    const newReadme = buildReadme(readmeData, todoist.join("           \n <br>"));
+    
     if (newReadme !== readmeData) {
       core.info("✏️ Writing to " + README_FILE_PATH);
       fs.writeFileSync(README_FILE_PATH, newReadme);
@@ -93,7 +94,7 @@ async function updateReadme(data) {
       // }
 
 
-      process.exit(0);
+      process.exit(1);
 
 
       // GitHub Action git push 
