@@ -1,0 +1,50 @@
+name: 🚧 Todoist Updater 📯
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */8 * * *" # Runs every 8 hours
+
+jobs:
+  update-readme:
+    name: Update README.md with Todoist Stats
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code ⛵️
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Setup git ⚙️
+        run: |
+          git config --global user.email "aldoyh@gmail.com"
+          git config --global user.name "Hasan"
+
+      - name: Update todoist stats 📊
+        id: todoist
+        uses: aldoyh/todoist-readme@master
+        with:
+          TODOIST_API_KEY: ${{ secrets.TODOIST_API_KEY }}
+          USERNAME: ${{ github.actor }}
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Update README with current date
+        run: |
+          # sed -i "/<!-- TODO-IST:START -->/a \Updated: ${{ env.date }}" README.md
+          sed -i "/<!-- TODO-IST:END -->/a \🗓️ Updated: ${{ env.date }}" README.md
+
+      - name: Check for changes in README.md 📝
+        id: diffcheck
+        run: |
+          git diff --exit-code --quiet origin/main README.md || echo "difference=true" >> $GITHUB_ENV
+          git add .
+          git commit -m "Update README.md"
+        
+      - name: Push changes 📦
+        if: env.difference == 'true'
+        run: |
+          git push origin main
