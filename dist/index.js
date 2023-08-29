@@ -6250,7 +6250,7 @@ async function updateReadme(data) {
     const readmeData = fs.readFileSync(README_FILE_PATH, "utf8");
 
     const newReadme = buildReadme(readmeData, todoist.join("           \n <br>"));
-    
+
     if (newReadme !== readmeData) {
       core.info("✏️ Writing to " + README_FILE_PATH);
       fs.writeFileSync(README_FILE_PATH, newReadme);
@@ -6259,24 +6259,9 @@ async function updateReadme(data) {
       //   commitReadme();
       // }
 
-      core.info("README.md updated 👔 Successfully");
+      core.info("README.md updated 👔 Successfully 🎉");
 
-      // if (!process.env.TEST_MODE) {
-      //   await exec("git", ["add", README_FILE_PATH]);
-      //   await exec("git", [
-      //     "commit",
-      //     "-m",
-      //     "📝 update README.md",
-      //     "--no-verify",
-      //   ]);
-
-      //   await exec("git", ["push"]);
-      // }
-
-
-      process.exit(1);
-
-
+      process.exit(0);
       // GitHub Action git push 
 
     } else {
