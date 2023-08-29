@@ -568,8 +568,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OidcClient = void 0;
-const http_client_1 = __nccwpck_require__(7794);
-const auth_1 = __nccwpck_require__(4610);
+const http_client_1 = __nccwpck_require__(4284);
+const auth_1 = __nccwpck_require__(5479);
 const core_1 = __nccwpck_require__(7733);
 class OidcClient {
     static createHttpClient(allowRetry = true, maxRetry = 10) {
@@ -1038,7 +1038,7 @@ exports.toCommandProperties = toCommandProperties;
 
 /***/ }),
 
-/***/ 4610:
+/***/ 5479:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -1126,7 +1126,7 @@ exports.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHand
 
 /***/ }),
 
-/***/ 7794:
+/***/ 4284:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -1164,7 +1164,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.HttpClient = exports.isHttps = exports.HttpClientResponse = exports.HttpClientError = exports.getProxyUrl = exports.MediaTypes = exports.Headers = exports.HttpCodes = void 0;
 const http = __importStar(__nccwpck_require__(3685));
 const https = __importStar(__nccwpck_require__(5687));
-const pm = __importStar(__nccwpck_require__(1116));
+const pm = __importStar(__nccwpck_require__(2923));
 const tunnel = __importStar(__nccwpck_require__(4249));
 var HttpCodes;
 (function (HttpCodes) {
@@ -1251,6 +1251,19 @@ class HttpClientResponse {
                 });
                 this.message.on('end', () => {
                     resolve(output.toString());
+                });
+            }));
+        });
+    }
+    readBodyBuffer() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                const chunks = [];
+                this.message.on('data', (chunk) => {
+                    chunks.push(chunk);
+                });
+                this.message.on('end', () => {
+                    resolve(Buffer.concat(chunks));
                 });
             }));
         });
@@ -1738,7 +1751,7 @@ const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => ((c[k.toLowerCa
 
 /***/ }),
 
-/***/ 1116:
+/***/ 2923:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -1759,7 +1772,13 @@ function getProxyUrl(reqUrl) {
         }
     })();
     if (proxyVar) {
-        return new URL(proxyVar);
+        try {
+            return new URL(proxyVar);
+        }
+        catch (_a) {
+            if (!proxyVar.startsWith('http://') && !proxyVar.startsWith('https://'))
+                return new URL(`http://${proxyVar}`);
+        }
     }
     else {
         return undefined;
@@ -6192,7 +6211,22 @@ async function updateReadme(data) {
   const longestStreak = [
     `⏳  Longest streak is **${goals.max_daily_streak.count}** days`,
   ];
-  // todoist.push(longestStreak);
+  todoist.push(longestStreak);
+
+  // add the updated date in a pretty way
+  const date = new Date();
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  const lastUpdated = [
+    `📅  Last updated: **${date.toLocaleDateString("en-US", options)}**`,
+  ];
+  todoist.push(lastUpdated);
+
 
   // const currentStreak = [
   //   `🔥  Current streak is **${goals.current_streak.count}** days`,
@@ -6215,7 +6249,8 @@ async function updateReadme(data) {
     // })
     const readmeData = fs.readFileSync(README_FILE_PATH, "utf8");
 
-    const newReadme = buildReadme(readmeData, todoist.join("           \n"));
+    const newReadme = buildReadme(readmeData, todoist.join("           \n <br>"));
+    
     if (newReadme !== readmeData) {
       core.info("✏️ Writing to " + README_FILE_PATH);
       fs.writeFileSync(README_FILE_PATH, newReadme);
@@ -6239,7 +6274,7 @@ async function updateReadme(data) {
       // }
 
 
-      process.exit(0);
+      process.exit(1);
 
 
       // GitHub Action git push 

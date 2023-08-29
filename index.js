@@ -46,7 +46,22 @@ async function updateReadme(data) {
   const longestStreak = [
     `⏳  Longest streak is **${goals.max_daily_streak.count}** days`,
   ];
-  // todoist.push(longestStreak);
+  todoist.push(longestStreak);
+
+  // add the updated date in a pretty way
+  const date = new Date();
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  const lastUpdated = [
+    `📅  Last updated: **${date.toLocaleDateString("en-US", options)}**`,
+  ];
+  todoist.push(lastUpdated);
+
 
   // const currentStreak = [
   //   `🔥  Current streak is **${goals.current_streak.count}** days`,
