@@ -1,0 +1,122 @@
+repo_name: aldoyh/todoist-readme
+report_id: e6535916234cf65f2a6c7c584093e8e0
+version: 0.1
+repo_type: Public
+timestamp: '2024-01-10T18:21:34+00:00'
+requested_by: aldoyh
+provider: github
+branch: master
+detected_tools_count: 9
+tools:
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/aldoyh/todoist-readme
+  detection_source: Repo Metadata
+- name: PHP
+  description: A popular general-purpose scripting language that is especially suited
+    to web development
+  website_url: http://www.php.net/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/991/hwUcGZ41_400x400.jpg
+  detection_source_url: https://github.com/aldoyh/todoist-readme
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/aldoyh/todoist-readme
+  detection_source: Repo Metadata
+- name: GitHub Actions
+  description: Automate your workflow from idea to production
+  website_url: https://github.com/features/actions
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/11563/actions.png
+  detection_source_url: https://github.com/aldoyh/todoist-readme/blob/master/.github/workflows/main.yml
+  detection_source: ".github/workflows/main.yml"
+  last_updated_by: doy•Tech
+  last_updated_on: 2023-08-29 17:11:27.000000000 Z
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/aldoyh/todoist-readme/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: abhisheknaiidu
+  last_updated_on: 2020-08-07 10:30:05.000000000 Z
+- name: axios
+  description: Promise based HTTP client for the browser and node.js
+  website_url: https://github.com/mzabriskie/axios
+  version: 0.20.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript Utilities & Libraries
+  image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: https://github.com/aldoyh/todoist-readme/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: abhisheknaiidu
+  last_updated_on: 2020-09-10 17:08:04.000000000 Z
+- name: child_process
+  description: This package name is not currently in use, but was formerly occupied
+    by another package
+  package_url: https://www.npmjs.com/child_process
+  version: 1.0.2
+  license: ISC
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16816/default_2e3ed47575edcaf407097e6171e3d4cb8681a6b3.png
+  detection_source_url: https://github.com/aldoyh/todoist-readme/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: abhisheknaiidu
+  last_updated_on: 2020-09-11 04:59:35.000000000 Z
+- name: process
+  description: Process information for node.js and browsers
+  package_url: https://www.npmjs.com/process
+  version: 0.11.10
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17866/default_99a4718ac3f2beccb28962b727b0a38010c9b496.png
+  detection_source_url: https://github.com/aldoyh/todoist-readme/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: abhisheknaiidu
+  last_updated_on: 2020-09-11 04:59:35.000000000 Z
+- name: guzzle/guzzle
+  description: PHP HTTP client
+  package_url: https://packagist.org/guzzle/guzzle
+  version: 3.9.3
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/aldoyh/todoist-readme/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hasan
+  last_updated_on: 2023-07-18 14:19:52.000000000 Z
